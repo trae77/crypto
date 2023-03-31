@@ -18,3 +18,65 @@ var web3 = new Web3('/Users/myuser/Library/Ethereum/geth.ipc', net); // mac os p
 var web3 = new Web3(new Web3.providers.IpcProvider('/Users/myuser/Library/Ethereum/geth.ipc', net)); // mac os path
 // on windows the path is: "\\\\.\\pipe\\geth.ipc"
 // on linux the path is: "/users/myuser/.ethereum/geth.ipc"
+
+// ====
+// Http
+// ====
+
+var Web3HttpProvider = require('web3-providers-http');
+
+var options = {
+    keepAlive: true,
+    withCredentials: false,
+    timeout: 20000, // ms
+    headers: [
+        {
+            name: 'Access-Control-Allow-Origin',
+            value: '*'
+        },
+        {
+            ...
+        }
+    ],
+    agent: {
+        http: http.Agent(...),
+        baseUrl: ''
+    }
+};
+
+var provider = new Web3HttpProvider('http://localhost:8545', options);
+
+// ==========
+// Websockets
+// ==========
+
+var Web3WsProvider = require('web3-providers-ws');
+
+var options = {
+    timeout: 30000, // ms
+
+    // Useful for credentialed urls, e.g: ws://username:password@localhost:8546
+    headers: {
+      authorization: 'Basic username:password'
+    },
+
+    clientConfig: {
+      // Useful if requests are large
+      maxReceivedFrameSize: 100000000,   // bytes - default: 1MiB
+      maxReceivedMessageSize: 100000000, // bytes - default: 8MiB
+
+      // Useful to keep a connection alive
+      keepalive: true,
+      keepaliveInterval: 60000 // ms
+    },
+
+    // Enable auto reconnection
+    reconnect: {
+        auto: true,
+        delay: 5000, // ms
+        maxAttempts: 5,
+        onTimeout: false
+    }
+};
+
+var ws = new Web3WsProvider('ws://localhost:8546', options);
