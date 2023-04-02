@@ -33,15 +33,17 @@ var options = {
         {
             name: 'Access-Control-Allow-Origin',
             value: '*'
-        },
-        {
-            ...
         }
-    ],
-    agent: {
-        http: http.Agent(...),
-        baseUrl: ''
-    }
+        // ,
+        // {
+        //     ...
+        // }
+    ]
+    // ],
+    // agent: {
+    //     http: http.Agent(...),
+    //     baseUrl: ''
+    // }
 };
 
 var provider = new Web3HttpProvider('http://localhost:8545', options);
